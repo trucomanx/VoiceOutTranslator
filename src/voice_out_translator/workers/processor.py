@@ -2,8 +2,8 @@ import queue
 import datetime
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from external_lib.transcription import transcribe, translate
-from utils.temp_audio import cleanup_file
+from voice_out_translator.external_lib.transcription import transcribe, translate
+from voice_out_translator.utils.temp_audio import cleanup_file
 
 
 class AudioProcessorWorker(QThread):

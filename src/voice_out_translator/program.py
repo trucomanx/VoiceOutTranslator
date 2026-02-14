@@ -7,11 +7,11 @@ import signal
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QTimer
 
-from ui.main_window import MainWindow
-from utils.temp_audio import init_temp_dir, cleanup_all
+from voice_out_translator.ui.main_window import MainWindow
+from voice_out_translator.utils.temp_audio import init_temp_dir, cleanup_all
 
-import about as about
-import modules.configure as configure
+import voice_out_translator.about as about
+import voice_out_translator.modules.configure as configure
 
 # ---------- Path to config gpt file ----------
 CONFIG_GPT_PATH = os.path.join( os.path.expanduser("~"),
@@ -35,8 +35,10 @@ def main():
     
     # Inicializar diretório temporário
     temp_dir = init_temp_dir(prefix="audio_")
-    print("temp_dir:",temp_dir)
     virtual_monitor_name = "VirtualOutput"
+
+    print("            temp_dir:",temp_dir)
+    print("virtual_monitor_name:",virtual_monitor_name)
     
     # Criar janela principal
     main_window = MainWindow(temp_dir, virtual_monitor_name)

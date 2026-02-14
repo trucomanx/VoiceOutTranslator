@@ -2,8 +2,8 @@ import numpy as np
 import queue
 import datetime
 from typing import Callable
-from audio.vad import RMSVoiceActivityDetector
-from utils.temp_audio import create_temp_mp3
+from voice_out_translator.audio.vad import RMSVoiceActivityDetector
+from voice_out_translator.utils.temp_audio import create_temp_mp3
 
 
 class SpeechSegmenter:

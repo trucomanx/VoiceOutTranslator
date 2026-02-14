@@ -1,6 +1,6 @@
-# {PROGRAM_NAME}
+# voice-out-translator
 
-{SUMMARY}
+Translate and transcribe the audio output voice.
 
 ## Upload to PYPI
 

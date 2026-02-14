@@ -1,41 +1,41 @@
-# {PROGRAM_NAME}
+# voice-out-translator
 
-{SUMMARY}
+Translate and transcribe the audio output voice.
 
 
 ## Install from PYPI
 
-The homepage in pipy is https://pypi.org/project/{MODULE_NAME}/
+The homepage in pipy is https://pypi.org/project/voice_out_translator/
 
 ```bash
-pip install --upgrade {MODULE_NAME}
+pip install --upgrade voice_out_translator
 ```
 
 Using:
 
 ```bash
-{PROGRAM_NAME}
+voice-out-translator
 ```
 
 ## Install from source
-Installing `{PROGRAM_NAME}` program
+Installing `voice-out-translator` program
 
 ```bash
-git clone https://github.com/trucomanx/{REPOSITORY_NAME}.git
-cd {REPOSITORY_NAME}
+git clone https://github.com/trucomanx/VoiceOutTranslator.git
+cd VoiceOutTranslator
 pip install -r requirements.txt
 cd src
 python -m build
-pip install dist/{MODULE_NAME}-*.tar.gz
+pip install dist/voice_out_translator-*.tar.gz
 ```
 Using:
 
 ```bash
-{PROGRAM_NAME}
+voice-out-translator
 ```
 
 ## Uninstall
 
 ```bash
-pip uninstall {MODULE_NAME}
+pip uninstall voice_out_translator
 ```

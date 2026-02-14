@@ -7,7 +7,7 @@ import sys
 here = pathlib.Path(__file__).parent.resolve()
 sys.path.insert(0, str(here))
 
-from {MODULE_NAME}.about import (
+from voice_out_translator.about import (
     __version__,
     __package__,
     __program_name__,
@@ -43,7 +43,7 @@ classifiers = [
 ]
 license = "GPL-3.0-only WITH Classpath-Exception-2.0 OR BSD-3-Clause"
 license-files = ["LICENSE"]
-keywords = ["writing", "translate"]
+keywords = ["stt", "translate"]
 dependencies = [
     "PyQt5",
     "deep-consultation"
@@ -59,7 +59,7 @@ dependencies = [
 "{__program_name__}" = "{__package__}.program:main"
 
 [tool.setuptools]
-packages = ["{__package__}", "{__package__}.modules"]
+packages = ["{__package__}", "{__package__}.audio", "{__package__}.external_lib", "{__package__}.modules", "{__package__}.ui", "{__package__}.utils", "{__package__}.workers"]
 
 [tool.setuptools.package-data]
 "{__package__}" = ["icons/logo.png"]

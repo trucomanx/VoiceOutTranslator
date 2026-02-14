@@ -19,14 +19,14 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
-from audio.vad import RMSVoiceActivityDetector
-from audio.capture import SystemAudioCapture
-from audio.segmenter import SpeechSegmenter
-from workers.processor import AudioProcessorWorker
-from utils.virtual_out import setup_virtual_output
+from voice_out_translator.audio.vad import RMSVoiceActivityDetector
+from voice_out_translator.audio.capture import SystemAudioCapture
+from voice_out_translator.audio.segmenter import SpeechSegmenter
+from voice_out_translator.workers.processor import AudioProcessorWorker
+from voice_out_translator.utils.virtual_out import setup_virtual_output
 
-import about as about
-import modules.configure as configure
+import voice_out_translator.about as about
+import voice_out_translator.modules.configure as configure
 
 CONFIG_GPT_PATH = os.path.join( os.path.expanduser("~"),
                                 ".config", 
@@ -87,10 +87,7 @@ class MainWindow(QMainWindow):
         self.btn_stop.clicked.connect(self.stop_capture)
         self.btn_stop.setEnabled(False)
         button_layout.addWidget(self.btn_stop)
-        
-        self.btn_calibrate = QPushButton("Calibrar Ruído")
-        self.btn_calibrate.clicked.connect(self.calibrate_noise)
-        button_layout.addWidget(self.btn_calibrate)
+
         
         main_layout.addLayout(button_layout)
         
@@ -126,9 +123,14 @@ class MainWindow(QMainWindow):
         self.rms_spinbox.setDecimals(3)  # 2 casas decimais
         self.rms_spinbox.setValue(0.0)  # Valor inicial
         self.rms_spinbox.valueChanged.connect(self._on_rms_spinbox_changed) 
-
         rms_layout.addWidget(self.rms_spinbox)
-        rms_layout.addStretch()
+
+        
+        self.btn_calibrate = QPushButton("Calibrar Ruído")
+        self.btn_calibrate.clicked.connect(self.calibrate_noise)
+        rms_layout.addWidget(self.btn_calibrate)
+
+        #rms_layout.addStretch()
 
         main_layout.addLayout(rms_layout)
         

@@ -1,8 +1,8 @@
-# {PROGRAM_NAME}
+# voice-out-translator
 
-{SUMMARY}
+Translate and transcribe the audio output voice.
 
 # Configure
 
-Go to `Configure` to open the `~/config/{MODULE_NAME}/config.json` file. 
+Go to `Configure` to open the `~/config/voice_out_translator/config.gpt.json` file. 
 

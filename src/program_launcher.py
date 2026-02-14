@@ -18,14 +18,14 @@ cd src
 
 
 ## ubuntu ##
-python3 -m PyInstaller --onefile --windowed --name {MODULE_NAME} --add-data "{MODULE_NAME}/icons:icons" --collect-all PyQt5  program_launcher.py
+python3 -m PyInstaller --onefile --windowed --name voice_out_translator --add-data "voice_out_translator/icons:icons" --collect-all PyQt5  program_launcher.py
 
 ## windows ##
-python -m PyInstaller --onefile --windowed --name {MODULE_NAME} --add-data "{MODULE_NAME}/icons;icons" --collect-all PyQt5  program_launcher.py
+python -m PyInstaller --onefile --windowed --name voice_out_translator --add-data "voice_out_translator/icons;icons" --collect-all PyQt5  program_launcher.py
 
 '''
 
-from {MODULE_NAME}.program import main
+from voice_out_translator.program import main
 
 if __name__ == "__main__":
     main()
