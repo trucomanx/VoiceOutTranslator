@@ -6,3 +6,5 @@
 /src/voice_out_translator/ui/__pycache__/
 /src/voice_out_translator/utils/__pycache__/
 /src/voice_out_translator/workers/__pycache__/
+/src/dist/
+/src/voice_out_translator.egg-info

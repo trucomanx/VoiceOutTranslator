@@ -2,6 +2,8 @@
 
 Translate and transcribe the audio output voice.
 
+**CURRENTLY ONLY WORKS ON LINUX**
+
 ![logo](screenshot.png)
 
 ## 1. Installing
