@@ -18,22 +18,21 @@ def _run(cmd: str) -> str:
     return proc.stdout.strip()
 
 
-def setup_virtual_output(
-    virtual_sink: str = "VirtualOutput",
+def setup_virtual_input(
+    virtual_sink: str = "VirtualInput",
     latency_msec: int = 1
 ) -> dict:
     """
     Idempotente:
-    - cria VirtualOutput se não existir
-    - cria loopback da saída padrão para ele se não existir
+    - cria VirtualInput se não existir
+    - cria loopback da entrada padrão para ele se não existir
     - não duplica nada
     """
 
     created = {}
 
-    # 1️⃣ saída padrão (idioma-agnóstico)
-    default_sink = _run("pactl get-default-sink")
-    monitor_source = f"{default_sink}.monitor"
+    # 1️⃣ entrada padrão (idioma-agnóstico)
+    default_source = _run("pactl get-default-source")
 
     # 2️⃣ verificar se o sink virtual já existe
     sinks = _run("pactl list short sinks")
@@ -63,7 +62,7 @@ def setup_virtual_output(
             continue
 
         if (
-            f"source={monitor_source}" in args
+            f"source={default_source}" in args
             and f"sink={virtual_sink}" in args
         ):
             loopback_exists = True
@@ -72,7 +71,7 @@ def setup_virtual_output(
     if not loopback_exists:
         module_id = _run(
             "pactl load-module module-loopback "
-            f"source={monitor_source} "
+            f"source={default_source} "
             f"sink={virtual_sink} "
             f"latency_msec={latency_msec}"
         )
@@ -81,11 +80,10 @@ def setup_virtual_output(
     return created
 
 
-def teardown_virtual_output(created: dict):
+def teardown_virtual_input(created: dict):
     for module_id in created.values():
         subprocess.run(
             ["pactl", "unload-module", str(module_id)],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL
         )
-

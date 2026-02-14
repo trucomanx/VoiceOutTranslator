@@ -19,7 +19,6 @@ from voice_out_translator.audio.vad import RMSVoiceActivityDetector
 from voice_out_translator.audio.capture import SystemAudioCapture
 from voice_out_translator.audio.segmenter import SpeechSegmenter
 from voice_out_translator.workers.processor import AudioProcessorWorker
-from voice_out_translator.utils.virtual_out import setup_virtual_output
 
 import voice_out_translator.about             as about
 import voice_out_translator.modules.configure as configure
@@ -119,11 +118,19 @@ class MainWindow(QMainWindow):
     applicationClosing = pyqtSignal()
     calibrationComplete = pyqtSignal(float)  # ← Novo sinal
 
-    def __init__(self, temp_dir: str, virtual_monitor_name: str):
+    def __init__(self, temp_dir: str, source_type: str, device_name: str):
         super().__init__()
         self.temp_dir = temp_dir
-        self.virtual_monitor_name = virtual_monitor_name
-        setup_virtual_output( virtual_sink = virtual_monitor_name)
+        self.source_type = source_type
+        self.device_name = device_name
+        
+        # Setup virtual device based on source type
+        if source_type == 'output':
+            from voice_out_translator.utils.virtual_out import setup_virtual_output
+            setup_virtual_output(virtual_sink=device_name)
+        else:  # input
+            from voice_out_translator.utils.virtual_in import setup_virtual_input
+            setup_virtual_input(virtual_sink=device_name)
         
         self.setWindowTitle(about.__program_name__)
         self.resize(CONFIG["window_width"], CONFIG["window_height"])
@@ -460,12 +467,12 @@ class MainWindow(QMainWindow):
             silence_timeout = 0.5
         )
         
-        # Criar capture
+        # Criar capture - usa device_name apropriado (output ou input)
         self.capture = SystemAudioCapture(
             sample_rate=SAMPLE_RATE,
             frame_duration=0.03, # segundos
             callback=self._audio_callback,
-            sink_name=self.virtual_monitor_name
+            sink_name=self.device_name  # ← agora usa device_name genérico
         )
                
         # Iniciar worker
@@ -505,12 +512,12 @@ class MainWindow(QMainWindow):
         self.btn_calibrate.setEnabled(False)
         self.btn_start.setEnabled(False)
         
-        # Criar capture temporário para calibração
+        # Criar capture temporário para calibração - usa device_name apropriado
         self.capture = SystemAudioCapture(
             sample_rate=SAMPLE_RATE,
             frame_duration=0.03,
             callback=self._calibration_callback,
-            sink_name=self.virtual_monitor_name
+            sink_name=self.device_name  # ← agora usa device_name genérico
         )
         
         self.capture.start()
