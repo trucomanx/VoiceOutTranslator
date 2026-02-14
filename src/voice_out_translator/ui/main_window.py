@@ -125,12 +125,13 @@ class MainWindow(QMainWindow):
         self.device_name = device_name
         
         # Setup virtual device based on source type
+        # Guarda os módulos criados para destruir ao sair
         if source_type == 'output':
             from voice_out_translator.utils.virtual_out import setup_virtual_output
-            setup_virtual_output(virtual_sink=device_name)
+            self.created_modules = setup_virtual_output(virtual_sink=device_name)
         else:  # input
             from voice_out_translator.utils.virtual_in import setup_virtual_input
-            setup_virtual_input(virtual_sink=device_name)
+            self.created_modules = setup_virtual_input(virtual_sink=device_name)
         
         self.setWindowTitle(about.__program_name__)
         self.resize(CONFIG["window_width"], CONFIG["window_height"])
@@ -569,6 +570,20 @@ class MainWindow(QMainWindow):
         
         if self.worker:
             self.worker.stop()
+        
+        # Destruir apenas os módulos que criamos
+        if hasattr(self, 'created_modules') and self.created_modules:
+            try:
+                if self.source_type == 'output':
+                    from voice_out_translator.utils.virtual_out import teardown_virtual_output
+                    teardown_virtual_output(self.created_modules)
+                    print(f"[INFO] Módulos virtuais de output destruídos: {list(self.created_modules.keys())}")
+                else:  # input
+                    from voice_out_translator.utils.virtual_in import teardown_virtual_input
+                    teardown_virtual_input(self.created_modules)
+                    print(f"[INFO] Módulos virtuais de input destruídos: {list(self.created_modules.keys())}")
+            except Exception as e:
+                print(f"[WARNING] Erro ao destruir módulos virtuais: {e}")
         
         self.applicationClosing.emit()
     
