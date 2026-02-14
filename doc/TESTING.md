@@ -1,6 +1,6 @@
 # voice-out-translator
 
-Translate and transcribe the audio output voice.
+Captures and translates/transcribes computer audio output in real-time.
 
 ## Testar program
 

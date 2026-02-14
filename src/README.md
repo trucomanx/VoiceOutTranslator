@@ -1,6 +1,7 @@
 # voice-out-translator
 
-Translate and transcribe the audio output voice.
+Captures and translates/transcribes computer audio output in real-time.
+This application monitors your computer's audio output (system audio, applications, browser audio, etc.) by creating a virtual copy of the audio stream. It then processes this captured audio using speech-to-text technology to provide live transcription or translation of any spoken content playing through your system.
 
 **CURRENTLY ONLY WORKS ON LINUX**
 
