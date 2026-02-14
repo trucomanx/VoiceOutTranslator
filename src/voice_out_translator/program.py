@@ -23,7 +23,8 @@ DEFAULT_GPT_CONTENT={
     "usage": "https://deepinfra.com/dash/usage",
     "base_url": "https://api.deepinfra.com/v1/openai",
     "model_transcript": "mistralai/Voxtral-Mini-3B-2507",
-    "language_transcript": "pt"
+    "language_transcript": "pt",
+    "model_translate": "openai/whisper-large-v3"
 }
 
 configure.verify_default_config(CONFIG_GPT_PATH,default_content=DEFAULT_GPT_CONTENT)

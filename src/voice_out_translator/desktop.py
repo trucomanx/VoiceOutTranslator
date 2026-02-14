@@ -1,7 +1,7 @@
 import os
 import subprocess
-import {MODULE_NAME}.about as about
-from {MODULE_NAME}.modules.resources import resource_path
+import voice_out_translator.about as about
+from voice_out_translator.modules.resources import resource_path
 
 
 def update_desktop_database(desktop_path):

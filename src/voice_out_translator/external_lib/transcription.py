@@ -7,6 +7,7 @@ Este módulo fornece stubs para testes do pipeline.
 import random
 
 from deep_consultation.core_audio import speech_file_transcript_deepinfra
+from deep_consultation.core_audio import speech_file_translate_deepinfra
 
 from pydub import AudioSegment
 import os
@@ -21,7 +22,7 @@ def transcribe(audio_path: str, config_gpt: dict) -> str:
     Returns:
         String simulada em português
     """
-    #time.sleep(random.uniform(0.5, 2.0))
+
     print(audio_path)
     OUT=speech_file_transcript_deepinfra(   config_gpt["base_url"],
                                             config_gpt["api_key"],
@@ -42,13 +43,12 @@ def translate(audio_path: str, config_gpt: dict) -> str:
     Returns:
         String simulada em português
     """
-    #time.sleep(random.uniform(0.5, 2.0))
+    
     print(audio_path)
-    OUT=speech_file_transcript_deepinfra(   config_gpt["base_url"],
-                                            config_gpt["api_key"],
-                                            config_gpt["model_transcript"],
-                                            audio_path,
-                                            language=config_gpt["language_transcript"])
+    OUT=speech_file_translate_deepinfra(config_gpt["base_url"],
+                                        config_gpt["api_key"],
+                                        config_gpt["model_translate"],
+                                        audio_path )
     
     return OUT
     

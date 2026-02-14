@@ -46,7 +46,10 @@ license-files = ["LICENSE"]
 keywords = ["stt", "translate"]
 dependencies = [
     "PyQt5",
-    "deep-consultation"
+    "deep-consultation",
+    "numpy",
+    "sounddevice",
+    "pydub"
 ]
 
 [project.urls]
