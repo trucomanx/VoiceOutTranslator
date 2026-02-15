@@ -1,6 +1,6 @@
 # about.py
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __package__ = "voice_out_translator"
 __program_name__ = "voice-out-translator"
 __author__ = "Fernando Pujaico Rivera" 

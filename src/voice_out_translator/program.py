@@ -41,20 +41,22 @@ def parse_arguments():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  %(prog)s
-      Run with default settings (output monitoring)
-  
-  %(prog)s --source-type output --device-name VirtualOutput
-      Explicitly monitor audio output
-  
-  %(prog)s --source-type input --device-name VirtualInput
-      Monitor audio input (microphone)
-  
-  %(prog)s --autostart
-      Install autostart desktop file
-  
-  %(prog)s --applications
-      Install application menu entry
+
+# Run with default settings (output monitoring)
+%(prog)s
+
+# Explicitly monitor audio output  
+%(prog)s --source-type output --device-name VirtualOutput
+
+# Monitor audio input (microphone)  
+%(prog)s --source-type input --device-name VirtualInput
+
+# Install autostart desktop file  
+%(prog)s --autostart
+
+# Install application menu entry  
+%(prog)s --applications
+
         """
     )
     
