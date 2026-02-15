@@ -11,7 +11,12 @@ usage: voice-out-translator [-h] [--source-type {output,input}] [--device-name D
 
 Voice Out Translator - Translate and transcribe audio output/input
 
-options:
+```
+
+Options:
+
+```bash
+
   -h, --help            show this help message and exit
   --source-type {output,input}
                         Type of audio source to monitor (default: output)
