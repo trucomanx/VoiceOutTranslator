@@ -19,6 +19,7 @@ from voice_out_translator.audio.vad import RMSVoiceActivityDetector
 from voice_out_translator.audio.capture import SystemAudioCapture
 from voice_out_translator.audio.segmenter import SpeechSegmenter
 from voice_out_translator.workers.processor import AudioProcessorWorker
+from voice_out_translator.ui.overlay import SubtitleOverlay
 
 import voice_out_translator.about             as about
 import voice_out_translator.modules.configure as configure
@@ -60,7 +61,7 @@ DEFAULT_CONTENT={
     "rms_noise_calibration_tooltip": "Set the RMS Noise value, which is normalized to 1.0 and used to determine when an audio frame is considered a silence frame.",
     "btn_calibrate": "Calibrate Noise",
     "btn_calibrate_tooltip": "To obtain the RMS audio value of some frames of the current output audio, this value is used as an RMS noise calibration.",
-    "font_label": "Set font size:",
+    "font_label": "Set list font size:",
     "font_label_tooltip": "Set the font size value in the list view of transcriptions/translations.",
     "save_transcriptions": "Save transcriptions",
     "error": "Error",
@@ -86,9 +87,6 @@ CONFIG_GPT=configure.load_config(CONFIG_GPT_PATH)
 SAMPLE_RATE = 8000
 
 # ---------------------------------------------
-
-
-
 
 # Adicione esta classe antes da MainWindow
 class WordWrapDelegate(QStyledItemDelegate):
@@ -155,6 +153,14 @@ class MainWindow(QMainWindow):
         self.calibration_frames = []
         self.is_calibrating = False
         
+        self.subtitle_overlay = SubtitleOverlay(position="bottom",
+                                                font_size=28,
+                                                font_color="yellow",
+                                                background_color="rgba(0, 0, 0, 75)",
+                                                padding = 20,
+                                                screen_width_percent=0.93,
+                                                auto_hide_ms=10000 )
+        
         self._create_toolbar()
         self._setup_ui()
         self._setup_worker()
@@ -165,8 +171,6 @@ class MainWindow(QMainWindow):
     def _create_toolbar(self):
         self.toolbar = self.addToolBar("Main")
         self.toolbar.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-
-
 
         #
         self.save_action = QAction(QIcon.fromTheme("document-save-as"), 
@@ -304,7 +308,6 @@ class MainWindow(QMainWindow):
     def on_coffee_action_click(self):
         QDesktopServices.openUrl(QUrl("https://ko-fi.com/trucomanx"))
     
-        
     
     def _setup_ui(self):
         
@@ -360,7 +363,6 @@ class MainWindow(QMainWindow):
         
         main_layout.addLayout(mode_layout)
         
-
         
         # RMS Calibration
         rms_layout = QHBoxLayout()
@@ -388,46 +390,76 @@ class MainWindow(QMainWindow):
 
         main_layout.addLayout(rms_layout)
         
-        
-        # Definir fonte e tamanho
-        font = QFont()
-        font.setPointSize(12)  # ← Tamanho desejado (12, 14, 16, etc.)
 
-        
-        # ListView
-        self.list_model = QStandardItemModel()
-        self.list_view = QListView()
-        self.list_view.setModel(self.list_model)
-        self.list_view.setFont(font)
-
-        # Adicionar delegate para quebra de linha
-        self.list_view.setItemDelegate(WordWrapDelegate())
-
-        # Habilitar word wrap
-        self.list_view.setWordWrap(True)
-        self.list_view.setResizeMode(QListView.Adjust)
-
-        main_layout.addWidget(self.list_view)
-        
-        
         # Font Size Control
         font_layout = QHBoxLayout()
         font_label = QLabel(CONFIG["font_label"])
         font_label.setToolTip(CONFIG["font_label_tooltip"])
         font_layout.addWidget(font_label)
-
-        self._on_font_size_changed(12)
-        
+        #
         self.font_spinbox = QSpinBox()
         self.font_spinbox.setRange(8, 24)  # Tamanho mínimo 8, máximo 24
         self.font_spinbox.setValue(12)     # Valor inicial (ajuste conforme preferir)
         self.font_spinbox.setSuffix(" pt")  # Adiciona "pt" no final
         self.font_spinbox.valueChanged.connect(self._on_font_size_changed)
-
         font_layout.addWidget(self.font_spinbox)
+        #
         font_layout.addStretch()
-
+        #
         main_layout.addLayout(font_layout)
+                
+        
+        # ListView
+        self.list_model = QStandardItemModel()
+        self.list_view = QListView()
+        self.list_view.setModel(self.list_model)
+        font = QFont()
+        font.setPointSize(12)  # ← Tamanho desejado (12, 14, 16, etc.)
+        self.list_view.setFont(font)
+        self._on_font_size_changed(12)
+        # Adicionar delegate para quebra de linha
+        self.list_view.setItemDelegate(WordWrapDelegate())
+        # Habilitar word wrap
+        self.list_view.setWordWrap(True)
+        self.list_view.setResizeMode(QListView.Adjust)
+        main_layout.addWidget(self.list_view)
+        
+        # spacer
+        dummy_label = QLabel("")
+        main_layout.addWidget(dummy_label)
+
+
+        # subtitle
+        subtitle_layout = QHBoxLayout()
+        subtitle_label = QLabel("Subtitle font size")
+        subtitle_label.setToolTip("Subtitle font size")
+        subtitle_layout.addWidget(subtitle_label)
+        #
+        self.subtitle_font_spinbox = QSpinBox()
+        self.subtitle_font_spinbox.setRange(8, 48)  
+        self.subtitle_font_spinbox.setValue(self.subtitle_overlay.get_font_size()) # 
+        self.subtitle_font_spinbox.setSuffix(" pt")  
+        self.subtitle_font_spinbox.valueChanged.connect(self._on_subtitle_font_size_changed)
+        subtitle_layout.addWidget(self.subtitle_font_spinbox)
+        #
+        self.subtitle_button = QPushButton("Show subtitle overlay")
+        self.subtitle_button.setCheckable(True)  
+        self.subtitle_button.toggled.connect(self.subtitle_callback)
+        subtitle_layout.addWidget(self.subtitle_button)
+        #
+        subtitle_layout.addStretch()
+        #
+        main_layout.addLayout(subtitle_layout)
+        
+    def subtitle_callback(self,checked):
+        if checked:
+            self.subtitle_overlay.show()
+        else:
+            self.subtitle_overlay.hide()
+
+    def _on_subtitle_font_size_changed(self):
+        value = self.subtitle_font_spinbox.value()
+        self.subtitle_overlay.update_style( font_size=value )
         
     def _on_font_size_changed(self, size: int):
         """Atualiza o tamanho da fonte do list view"""
@@ -560,6 +592,9 @@ class MainWindow(QMainWindow):
         # Scroll para o último item
         last_index = self.list_model.index(self.list_model.rowCount() - 1, 0)
         self.list_view.scrollTo(last_index)
+        
+        if self.subtitle_button.isChecked():
+            self.subtitle_overlay.show_text(text)
     
     def on_error(self, message: str):
         error_item = QStandardItem(f"[ERRO] {message}")

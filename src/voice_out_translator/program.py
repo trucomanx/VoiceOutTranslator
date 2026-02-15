@@ -25,7 +25,7 @@ DEFAULT_GPT_CONTENT={
     "usage": "https://deepinfra.com/dash/usage",
     "base_url": "https://api.deepinfra.com/v1/openai",
     "model_transcript": "mistralai/Voxtral-Mini-3B-2507",
-    "language_transcript": "pt",
+    "language_transcript": "",
     "model_translate": "openai/whisper-large-v3"
 }
 
