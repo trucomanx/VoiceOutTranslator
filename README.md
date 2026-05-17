@@ -27,7 +27,7 @@ voice-out-translator
 ```
 ## 2. More information
 
-If you want more information go to [doc](https://github.com/trucomanx/VoiceOutTranslator/blob/main/doc) directory
+If you want more information go to [doc](https://github.com/trucomanx-voice/VoiceOutTranslator/blob/main/doc) directory
 
 ## 3. Buy me a coffee
 

@@ -20,7 +20,7 @@ voice-out-translator
 Installing `voice-out-translator` program
 
 ```bash
-git clone https://github.com/trucomanx/VoiceOutTranslator.git
+git clone https://github.com/trucomanx-voice/VoiceOutTranslator.git
 cd VoiceOutTranslator
 pip install -r requirements.txt
 cd src

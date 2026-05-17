@@ -5,7 +5,7 @@ This application monitors your computer's audio output (system audio, applicatio
 
 **CURRENTLY ONLY WORKS ON LINUX**
 
-![logo](https://raw.githubusercontent.com/trucomanx/VoiceOutTranslator/main/screenshot.png)
+![logo](https://raw.githubusercontent.com/trucomanx-voice/VoiceOutTranslator/main/screenshot.png)
 
 ## 1. Installing
 
@@ -27,7 +27,7 @@ voice-out-translator
 ```
 ## 2. More information
 
-If you want more information go to [doc](https://github.com/trucomanx/VoiceOutTranslator/blob/main/doc) directory.
+If you want more information go to [doc](https://github.com/trucomanx-voice/VoiceOutTranslator/blob/main/doc) directory.
 
 ## 3. Buy me a coffee
 
