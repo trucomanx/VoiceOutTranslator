@@ -25,6 +25,13 @@ python -m PyInstaller --onefile --windowed --name voice_out_translator --add-dat
 
 '''
 
+import os
+from PyQt5.QtCore import QLibraryInfo
+
+os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = QLibraryInfo.location(
+    QLibraryInfo.PluginsPath
+)
+
 from voice_out_translator.program import main
 
 if __name__ == "__main__":
